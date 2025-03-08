@@ -11,12 +11,16 @@ import { BrowserRouter as Router,
          Route,
          Routes }  from 'react-router-dom';
 import { CartProvider } from "./Components/CartContext";
+import Login from "./Components/Login.jsx"
+import CourseDetail from "./Components/CourseDetail.jsx"
 
 
 const App = () => {
+
   const [courses, setCourses] = useState([]);
   const [laoding, setLoading] = useState(true);
   const [category, setCategory] = useState([]);
+
 
   const fetchData = async () => {
     setLoading(true);
@@ -29,7 +33,9 @@ const App = () => {
     } catch (err) {
       toast.error("Something Went Wrong");
     }
-    setLoading(false);
+    finally{
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -38,7 +44,7 @@ const App = () => {
 
 
   return (
-    
+  
     
     <CartProvider>
       <div className="min-h-screen flex-col flex bg-bgDark2">
@@ -54,13 +60,22 @@ const App = () => {
                     setCategory={setCategory}
                   />
                 </div>
+
                 <div className="w-11/12 max-w-[1200px] min-h-[50vh] mx-auto flex flex-wrap justify-center items-center">
                   {laoding ? <Spinner /> : <Cards courses={courses} category={category} />}
                 </div>
+
               </>
-            } />
+            } />  
+
+            <Route path="/login" element={<Login />} />
+
             <Route path="/cart" element={<Cart />} />
+
+            <Route path="/courseDetail" element={<CourseDetail />} />
+
           </Routes>
+
         </Router>
       </div>
     </CartProvider>
